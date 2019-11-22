@@ -38,7 +38,8 @@ class FrequencyTuner:
 
 
 if __name__ == "__main__":
+    input_file = "./inputs/day_1_input.txt"
     frequency = FrequencyTuner()
-    frequency.read_input("frequencies.txt")
+    frequency.read_input(input_file)
     frequency.process_input()
     print(f"Final result: {frequency.adjusted_frq}")
