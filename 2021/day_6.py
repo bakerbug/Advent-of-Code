@@ -28,7 +28,6 @@ class School:
         for fishy in self.school:
             new_fish = fishy.age_fish()
             if new_fish:
-                print("New Fish!")
                 new_fish_count += 1
         for x in range(new_fish_count):
             self.school.append(Fish(8))
@@ -44,7 +43,6 @@ class School:
 if __name__ == "__main__":
     school_o_fish = School()
 
-    for day in range(80):
+    for day in range(256):
         school_o_fish.next_day()
-        school_o_fish.print_school()
     print(f"There are {school_o_fish.count_fish()} fish")
