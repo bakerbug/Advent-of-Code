@@ -11,6 +11,7 @@ class Map:
             self.lines.append(line)
 
         self.grid = []
+        self.diag_points = []
         for x in range(self.grid_size):
             row = []
             for y in range(self.grid_size):
@@ -42,13 +43,63 @@ class Map:
 
         if first_y == second_y:
             # horizontal line
-            print(f"Drawing horizontal line {line_points}")
             self.draw_horizontal_line(first_y, first_x, second_x)
 
-        if first_x == second_x:
+        elif first_x == second_x:
             # vertical line
-            print(f"Drawing vertical line {line_points}")
             self.draw_vertical_line(first_x, first_y, second_y)
+
+        else:
+            # diagonal line
+            self.draw_diagonal_line(first_x, first_y, second_x, second_y)
+
+    def draw_diagonal_line(self, begin_x, begin_y, end_x, end_y):
+        self.diag_points = []
+        slope = (end_y - begin_y) / (end_x - begin_x)
+        if slope > 0:
+            pos_slope = True
+        else:
+            pos_slope = False
+
+        x_points = []
+        y_points = []
+        line_points = []
+        if begin_x < end_x:
+            for x in range(begin_x, end_x + 1):
+                x_points.append(x)
+        if end_x < begin_x:
+            for x in range(end_x, begin_x + 1):
+                x_points.append(x)
+
+        if begin_y < end_y:
+            for y in range(begin_y, end_y + 1):
+                y_points.append(y)
+        if end_y < begin_y:
+            for y in range(end_y, begin_y + 1):
+                y_points.append(y)
+
+        if pos_slope:
+            self.pos_slope(x_points, y_points)
+            if [begin_x, begin_y] not in self.diag_points:
+                self.diag_points = []
+                self.neg_slope(x_points, y_points)
+        else:
+            self.neg_slope(x_points, y_points)
+            if [begin_x, begin_y] not in self.diag_points:
+                self.diag_points = []
+                self.pos_slope(x_points, y_points)
+
+        row_id = 0
+        for point in self.diag_points:
+            self.grid[point[1]][point[0]] += 1
+
+    def pos_slope(self, x_points, y_points):
+        for x, y in zip(x_points, reversed(y_points)):
+            self.diag_points.append([x, y])
+
+    def neg_slope(self, x_points, y_points):
+        for x, y in zip(x_points, y_points):
+            self.diag_points.append([x, y])
 
     def draw_horizontal_line(self, y, start, finish):
         row_index = 0
@@ -76,6 +127,5 @@ class Map:
 if __name__ == "__main__":
     map = Map()
     map.fill_map()
-    map.print_map()
 
     print(f"There are {map.find_crosses()} crosses.")
