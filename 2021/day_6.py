@@ -14,6 +14,7 @@ class Fish:
 class School:
     def __init__(self):
         self.data = []
+        self.day_count = 0
         with open("inputs/day_6_input.txt", "r") as data_file:
             self.raw_data = data_file.readline()
         self.data = self.raw_data.split(",")
@@ -31,6 +32,8 @@ class School:
                 new_fish_count += 1
         for x in range(new_fish_count):
             self.school.append(Fish(8))
+        self.day_count += 1
+        print(f"Day {self.day_count} over.")
 
     def count_fish(self):
         return len(self.school)
