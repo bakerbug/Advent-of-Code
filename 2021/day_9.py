@@ -45,8 +45,6 @@ class Mapper:
         answer = first * second * thrid
         print(f"The answer is {answer}")
 
-
-
     def map_basin(self, spot):
         found_spot = False
         north = [spot[0] - 1, spot[1]]
@@ -91,14 +89,6 @@ class Mapper:
             pass
 
         return found_spot
-
-
-
-
-
-
-
-
 
     def find_low_points(self):
         for y_index in range(self.y_length):
@@ -160,4 +150,3 @@ if __name__ == "__main__":
     map.risk_calculator()
     map.find_basins()
     map.find_biggest_sizes()
-
