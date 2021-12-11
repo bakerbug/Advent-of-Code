@@ -44,8 +44,15 @@ class Octopi:
                     pass
         return flash
 
+    def is_in_sync(self):
+        for row in self.input:
+            for octo in row:
+                if octo > 0:
+                    return False
+        return True
+
     def step_swarm(self):
-        for step in range(100):
+        for step in range(2000):
             y_index = 0
             for row in self.input:
                 x_index = 0
@@ -53,13 +60,18 @@ class Octopi:
                     self.input[y_index][x_index] += 1
                     x_index += 1
                 y_index += 1
-            self.process_flashes()
+            flash_detected = self.process_flashes()
+            if self.is_in_sync():
+                print(f"Synchronized on step {step + 1}")
+                # self.print_map()
+                return
 
     def process_flashes(self):
         keep_going = True
+        flash_detected = False
         while keep_going:
             keep_going = False
-            print(f"Going again! {self.again_count}")
+            # print(f"Going again! {self.again_count}")
             self.again_count += 1
             y_index = 0
             for row in self.input:
@@ -70,13 +82,14 @@ class Octopi:
                         keep_going = True
                     x_index += 1
                 y_index += 1
-            self.print_map()
+            # self.print_map()
+        return flash_detected
 
 
 if __name__ == "__main__":
     octo = Octopi()
-    octo.print_map()
+    # octo.print_map()
     octo.step_swarm()
     octo.process_flashes()
-    octo.print_map()
+    # octo.print_map()
     print(f"Total Flashes: {octo.total_flashes}")
