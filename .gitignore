@@ -104,3 +104,9 @@ venv.bak/
 .mypy_cache/
 
 .idea/
+
+2021/package-lock.json
+
+2021/yarn.lock
+
+2021/node_modules/
